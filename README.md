@@ -3,9 +3,22 @@ You can create JSON files that your app can read from to configure certain thing
 
 # Getting Started
 
+### Building the Docker Image
+
+1. You should have Docker installed. You can [download it here](https://www.docker.com/get-started).
+1. For development, make a `.env` file at the root of the project. More information on this can be found in the [Environment Variables](#environment-variables) section.
+1. At the root of the project, run the following command to build the image: `$ docker compose build`
+1. Create and migrate the database: 
+
+    ```sh
+    $ docker compose run --rm web bin/rails db:create
+    $ docker compose run --rm web bin/rails db:migrate
+    ```
+1. Once that's done, you can run `$ docker compose up` to bring up the app. It should load onto localhost:3000
+
 ### Environment Variables
 
-You should have these variables setup on your environment where this app will run:
+You should have these variables setup on your environment where this app will run. If running in development, there's a `.env.example` file that you should copy over to `.env` and fill in any missing variables.
 
 
 ### `REDIS_PROVIDER`
