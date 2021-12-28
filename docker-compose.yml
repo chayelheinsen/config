@@ -1,0 +1,42 @@
+version: "3.9"
+volumes:
+  bundle: {}
+services:
+  db:
+    image: postgres:13.5
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5431:5432"
+
+  redis:
+    image: redis
+
+  sidekiq:
+    build: .
+    volumes:
+      - .:/myapp
+      - bundle:/bundle
+    links:
+      - db
+      - redis
+    command: bundle exec sidekiq
+    env_file:
+      - .env
+
+  web:
+    build: .
+    volumes:
+      - .:/myapp
+      - bundle:/bundle
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - redis
+    env_file:
+      - .env
+    stdin_open: true
+    tty: true
