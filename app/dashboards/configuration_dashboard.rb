@@ -34,6 +34,7 @@ class ConfigurationDashboard < Administrate::BaseDashboard
     id
     created_at
     updated_at
+    content
   ].freeze
 
   # FORM_ATTRIBUTES

@@ -1,0 +1,68 @@
+<%#
+# Show
+
+This view is the template for the show page.
+It renders the attributes of a resource,
+as well as a link to its edit page.
+
+## Local variables:
+
+- `page`:
+  An instance of [Administrate::Page::Show][1].
+  Contains methods for accessing the resource to be displayed on the page,
+  as well as helpers for describing how each attribute of the resource
+  should be displayed.
+
+[1]: http://www.rubydoc.info/gems/administrate/Administrate/Page/Show
+%>
+
+<link href="https://ga.jspm.io/npm:jsoneditor@9.5.10/dist/jsoneditor.min.css" rel="stylesheet" type="text/css">
+
+<% content_for(:title) { t("administrate.actions.show_resource", name: page.page_title) } %>
+
+<header class="main-content__header" role="banner">
+  <h1 class="main-content__page-title">
+    <%= content_for(:title) %>
+  </h1>
+
+  <div>
+    <%= link_to(
+      t("administrate.actions.edit_resource", name: page.page_title),
+      [:edit, namespace, page.resource],
+      class: "button",
+    ) if valid_action?(:edit) && show_action?(:edit, page.resource) %>
+  </div>
+</header>
+
+<section class="main-content__body">
+  <dl>
+    <% page.attributes.each do |attribute| %>
+      <%# Skip the content attribute as we are manually adding it in to set the data-target %>
+      <% next if attribute.name == "content" %>
+        
+      <dt class="attribute-label" id="<%= attribute.name %>">
+      <%= t(
+        "helpers.label.#{resource_name}.#{attribute.name}",
+        default: page.resource.class.human_attribute_name(attribute.name),
+      ) %>
+      </dt>
+
+      <dd class="attribute-data attribute-data--<%=attribute.html_class%>">
+        <%= render_field attribute, page: page %>
+      </dd>
+    <% end %>
+  </dl>
+</section>
+
+<dt class="attribute-label" id="content">
+  <%= t(
+    "helpers.label.#{resource_name}.content",
+    default: page.resource.class.human_attribute_name("content"),
+  ) %>
+</dt>
+
+<dd class="attribute-data attribute-data--string">
+  <div data-controller="viewer" data-viewer-content-value="<%= page.resource.content %>">
+    <div data-viewer-target="input" style="height: 500px;"></div>
+</div>
+</dd>
