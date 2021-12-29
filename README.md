@@ -25,3 +25,6 @@ You should have these variables setup on your environment where this app will ru
 
 Set to the environment variable that contains the URL of your redis instance. For example, if running in docker, you may a variable called `DOCKER_REDIS`. The value of REDIS_PROVIDER would be DOCKER_REDIS. This allows you to change the redis provider on the fly quickly and allows you to keep multiple variables on your environment for all of your redis providers.
 
+### `SIDEKIQ_AUTH_PASSWORD`
+
+The password for the Sidekiq monitoring page.

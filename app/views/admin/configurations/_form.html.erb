@@ -1,0 +1,59 @@
+<%#
+# Form Partial
+
+This partial is rendered on a resource's `new` and `edit` pages,
+and renders all form fields for a resource's editable attributes.
+
+## Local variables:
+
+- `page`:
+  An instance of [Administrate::Page::Form][1].
+  Contains helper methods to display a form,
+  and knows which attributes should be displayed in the resource's form.
+
+[1]: http://www.rubydoc.info/gems/administrate/Administrate/Page/Form
+%>
+
+<%= form_for([namespace, page.resource], html: { class: "form" }) do |f| %>
+  <% if page.resource.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= t(
+          "administrate.form.errors",
+          pluralized_errors: pluralize(page.resource.errors.count, t("administrate.form.error")),
+          resource_name: display_resource_name(page.resource_name, singular: true)
+        ) %>
+      </h2>
+
+      <ul>
+        <% page.resource.errors.full_messages.each do |message| %>
+          <li class="flash-error"><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div data-controller="editor">
+    <% page.attributes.each do |attribute| -%>
+      <%# Skip the content attribute as we are manually adding it in to set the data-target %>
+      <% next if attribute.name == "content" %>
+
+      <div class="field-unit field-unit--<%= attribute.html_class %> field-unit--<%= requireness(attribute) %>">
+        <%= render_field attribute, f: f %>
+      </div>
+    <% end -%>
+
+    <input data-editor-target="output" type="hidden" value="<%= page.resource.content %>" name="configuration[content]" id="configuration_content">
+
+    <div data-editor-target="input" id="jsoneditor" style="height: 500px;"></div>
+    
+    </br>
+    <button data-action="editor#save">Save</button>
+  </div>
+
+  <div class="form-actions", style="display: none;">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+

@@ -1,0 +1,24 @@
+# == Schema Information
+#
+# Table name: environments
+#
+#  id               :uuid             not null, primary key
+#  name             :citext           not null
+#  configuration_id :uuid             not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#
+# Indexes
+#
+#  index_environments_on_configuration_id  (configuration_id)
+#
+
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  configuration: one
+
+two:
+  name: MyString
+  configuration: two

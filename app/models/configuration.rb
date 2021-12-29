@@ -13,4 +13,9 @@
 #
 
 class Configuration < ApplicationRecord
+  has_one :environment
+
+  validates :content, presence: true
+
+  delegate :name, to: :environment, allow_nil: true
 end

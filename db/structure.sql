@@ -10,6 +10,13 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: citext; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS citext WITH SCHEMA public;
+
+
+--
 -- Name: pgcrypto; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -45,6 +52,19 @@ CREATE TABLE public.configurations (
 
 
 --
+-- Name: environments; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.environments (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    name public.citext NOT NULL,
+    configuration_id uuid NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -70,6 +90,14 @@ ALTER TABLE ONLY public.configurations
 
 
 --
+-- Name: environments environments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.environments
+    ADD CONSTRAINT environments_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -85,6 +113,21 @@ CREATE INDEX index_configurations_on_content ON public.configurations USING gin 
 
 
 --
+-- Name: index_environments_on_configuration_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_environments_on_configuration_id ON public.environments USING btree (configuration_id);
+
+
+--
+-- Name: environments fk_rails_af2a4cb996; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.environments
+    ADD CONSTRAINT fk_rails_af2a4cb996 FOREIGN KEY (configuration_id) REFERENCES public.configurations(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -92,6 +135,7 @@ SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
 ('20211228142430'),
-('20211228142952');
+('20211228142952'),
+('20211229153425');
 
 
