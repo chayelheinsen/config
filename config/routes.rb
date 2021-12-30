@@ -17,12 +17,11 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
-
+    namespace :v1 do
+      API::V1::Router.new(self).routes 
+    end
   end
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
   # root "articles#index"
-
-  get "hello", to: "hello#index"
 end
