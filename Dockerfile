@@ -1,12 +1,12 @@
 FROM ruby:3.1.0
 
-RUN apt-get update -qq && apt-get install -y build-essential nodejs postgresql-client
-
-# for postgres
-RUN apt-get install -y libpq-dev
-
-# for nokogiri
-RUN apt-get install -y libxml2-dev libxslt1-dev
+RUN apt-get update -qq && apt-get install -y \
+  build-essential \
+  nodejs \
+  postgresql-client \
+  libpq-dev \ 
+  libxml2-dev \
+  libxslt1-dev
 
 ENV PORT 3000
 ENV APP_HOME /myapp
