@@ -3,7 +3,6 @@ class API::APIController < ActionController::API
   # include ActionController::HttpAuthentication::Token::ControllerMethods
 
   # rescue_from Authentication::Error, with: :render_auth_error
-  # rescue_from Authentication::InvalidPin, with: :render_auth_error
 
   before_action :set_default_response_format
 

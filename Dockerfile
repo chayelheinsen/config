@@ -20,7 +20,8 @@ ENV BUNDLE_GEMFILE=$APP_HOME/Gemfile \
   BUNDLE_JOBS=2 \
   BUNDLE_PATH=/bundle
 
-RUN bundle install --without production
+RUN bundle config set --local without 'production'
+RUN bundle install
 
 # Add a script to be executed every time the container starts.
 COPY entrypoint.sh /usr/bin/
@@ -29,9 +30,4 @@ ENTRYPOINT ["entrypoint.sh"]
 EXPOSE $PORT
 
 # Configure the main process to run when running the image
-
-# Uncomment to use TLS
-# CMD bundle exec rails s -b "ssl://0.0.0.0?key=${LOCALHOST_KEY_PATH}&cert=${LOCALHOST_CERT_PATH}&verify_mode=none"
-
-# Don't use TLS
 CMD ["bundle", "exec", "rails", "s", "-b", "0.0.0.0"]

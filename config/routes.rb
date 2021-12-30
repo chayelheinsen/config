@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :environments
     resources :configurations
+    resources :api_keys
 
     root to: "environments#index"
   end
