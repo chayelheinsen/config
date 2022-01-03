@@ -13,6 +13,9 @@ class API::V1::ConfigurationsController < API::APIController
   private 
 
   def set_configuration
-    @configuration = Environment.find_by(name: params[:name])&.configuration
+    name = params[:name]
+    @configuration = ::Configuration.joins(:environment)
+      .select(:content)
+      .find_by({ environments: { name: name } })
   end
 end
