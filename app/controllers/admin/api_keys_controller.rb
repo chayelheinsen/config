@@ -60,7 +60,10 @@ module Admin
     # for more information
 
     def valid_action?(name, resource = resource_class)
-      %w[edit].exclude?(name.to_s) && super
+      # There's a bug with destroy not working
+      #
+      # https://github.com/thoughtbot/administrate/issues/2075
+      %w[edit destroy].exclude?(name.to_s) && super
     end
   end
 end

@@ -1,8 +1,7 @@
 class API::APIController < ActionController::API
-  # include Authentication
-  # include ActionController::HttpAuthentication::Token::ControllerMethods
+  include APIKeyAuthenticatable
 
-  # rescue_from Authentication::Error, with: :render_auth_error
+  rescue_from APIKeyAuthenticatable::Error, with: :render_auth_error
 
   before_action :set_default_response_format
 

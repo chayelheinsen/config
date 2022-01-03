@@ -1,4 +1,5 @@
 class API::V1::ConfigurationsController < API::APIController
+  before_action :authenticate_with_token!
   before_action :set_configuration, only: [:show]
 
   def show

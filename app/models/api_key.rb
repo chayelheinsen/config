@@ -24,7 +24,7 @@ class APIKey < ApplicationRecord
  
   def self.authenticate_by_token!(token)
     digest = OpenSSL::HMAC.hexdigest("SHA256", secret_key, token)
- 
+
     find_by!(token_digest: digest)
   end
  
@@ -46,9 +46,8 @@ class APIKey < ApplicationRecord
  
   def generate_token_hmac_digest
     self.token = SecureRandom.hex
- 
-    digest = OpenSSL::HMAC.hexdigest("SHA256", APIKey.secret_key, token)
- 
+    digest = OpenSSL::HMAC.hexdigest("SHA256", APIKey.secret_key, self.token)
+
     self.token_digest = digest
   end 
 

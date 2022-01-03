@@ -11,23 +11,19 @@ module APIKeyAuthenticatable
   def http_api_token
     @http_api_token ||=
       if request.headers["Authorization"].present?
-        request.headers["Authorization"].split("Bearer").last
+        request.headers["Authorization"].split(" ").last
       end
   end
 
   def raise_auth_error
-    raise(Authentication::Error)
+    raise(APIKeyAuthenticatable::Error)
   end
 
   private
 
-  def api_token
-    @api_token ||= APIKey.authenticate_by_token!(http_api_token)
-  end
-
   def find_by_api_token
-    return if api_token.nil?
-    APIKey.authenticate_by_token!(api_token)
+    return if http_api_token.nil?
+    APIKey.authenticate_by_token!(http_api_token)
   rescue
     nil
   end
