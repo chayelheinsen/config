@@ -29,6 +29,6 @@ class API::V1::Router
     delete "users/logout" => "sessions#destroy"
 
     # Configuration
-    get "configurations/:name" => "configurations#show"
+    get "configurations/*name" => "configurations#show"
   end
 end

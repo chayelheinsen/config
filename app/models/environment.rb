@@ -17,4 +17,17 @@ class Environment < ApplicationRecord
   belongs_to :configuration
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
+
+  before_validation :clean
+
+  def config_route 
+    "/api/#{API::APIController.current_version}/configurations/#{name.downcase}"
+  end
+
+  private
+
+  def clean
+    self.name.try(&:strip!)
+    self.name.gsub!(" ", "_")
+  end
 end

@@ -18,4 +18,8 @@ class Configuration < ApplicationRecord
   validates :content, presence: true
 
   delegate :name, to: :environment, allow_nil: true
+
+  def config_route 
+    "/api/#{API::APIController.current_version}/configurations/#{name.downcase}"
+  end
 end

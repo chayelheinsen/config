@@ -13,6 +13,10 @@ class API::APIController < ActionController::API
     render_errors("Not authenticated", status: 401)
   end
 
+  def self.current_version
+    "v1"
+  end
+
   protected
 
   def set_default_response_format

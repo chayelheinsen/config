@@ -12,6 +12,7 @@ class ConfigurationDashboard < Administrate::BaseDashboard
     name: Field::String,
     id: Field::String,
     content: Field::String.with_options(searchable: false),
+    config_route: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -24,7 +25,7 @@ class ConfigurationDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = %i[
     name
     id
-    created_at
+    config_route
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -32,6 +33,7 @@ class ConfigurationDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = %i[
     name
     id
+    config_route
     created_at
     updated_at
     content

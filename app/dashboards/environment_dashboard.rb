@@ -11,6 +11,7 @@ class EnvironmentDashboard < Administrate::BaseDashboard
     configuration: Field::BelongsTo,
     id: Field::String,
     name: Field::String,
+    config_route: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -24,7 +25,7 @@ class EnvironmentDashboard < Administrate::BaseDashboard
     configuration
     id
     name
-    created_at
+    config_route
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -33,6 +34,7 @@ class EnvironmentDashboard < Administrate::BaseDashboard
     configuration
     id
     name
+    config_route
     created_at
     updated_at
   ].freeze
